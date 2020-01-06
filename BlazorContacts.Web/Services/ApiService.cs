@@ -1,10 +1,6 @@
 ﻿using BlazorContacts.Shared.Models;
-using IdentityModel.Client;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -13,22 +9,15 @@ namespace BlazorContacts.Web.Services
     public class ApiService
     {
         public HttpClient _httpClient;
-        private readonly ApiTokenCacheService _apiTokenCacheService;
 
-        public ApiService(HttpClient httpClient, ApiTokenCacheService apiTokenCacheService)
+        public ApiService(HttpClient httpClient)
         {
             // The ApiService service will use the IHttpClientFactory interface, which is the best way to use HttpClient in a server-side Blazor application. HttpClientFactory ensures that the sockets associated with each HttpClient instance are shared, thus preventing the issue of socket exhaustion.
             _httpClient = httpClient;
-            _apiTokenCacheService = apiTokenCacheService;
         }
 
         public async Task<List<Contact>> GetContactsAsync()
         {
-            var accessToken = await _apiTokenCacheService.GetAccessToken(
-                "blazorcontacts-web", "blazorcontacts-api", "thisismysecrets"
-            );
-            _httpClient.SetBearerToken(accessToken);
-
             var response = await _httpClient.GetAsync("api/contacts");
             response.EnsureSuccessStatusCode();
 
