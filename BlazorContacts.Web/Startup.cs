@@ -29,6 +29,7 @@ namespace BlazorContacts.Web
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<Services.ApiTokenCacheService>();
 
             // register the HttpClientFactory interface
             services.AddHttpClient<Services.ApiService>(client =>

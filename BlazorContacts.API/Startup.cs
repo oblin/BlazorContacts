@@ -25,6 +25,12 @@ namespace BlazorContacts.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options => {
+                    options.Authority = "http://localhost:5020";
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "blazorcontacts-api";
+                });
             services.AddControllers();
         }
 
@@ -40,6 +46,7 @@ namespace BlazorContacts.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
