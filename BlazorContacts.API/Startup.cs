@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +42,17 @@ namespace BlazorContacts.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            //運行於 Linux 時啟用 Reverse Proxy 模式 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+                });
+            }
 
+            app.UsePathBase(Configuration["pathBase"] ?? "/api");
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

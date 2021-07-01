@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace BlazorContacts.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ContactsController : ControllerBase
     {

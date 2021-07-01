@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorContacts.Web.Data;
+using System.Runtime.InteropServices;
 
 namespace BlazorContacts.Web
 {
@@ -54,6 +55,16 @@ namespace BlazorContacts.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //運行於 Linux 時啟用 Reverse Proxy 模式 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+                });
+            }
+
+            app.UsePathBase(Configuration["pathBase"] ?? "/web");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
