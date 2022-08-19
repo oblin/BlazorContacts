@@ -1,7 +1,7 @@
 ﻿@page "/contacts"
-
-@inject Services.ApiService apiService
 @using BlazorContacts.Shared.Models
+
+@inject BlazorContacts.Web.Services.ApiService apiService
 
 <h3>Contacts</h3>
 @if (contacts == null)

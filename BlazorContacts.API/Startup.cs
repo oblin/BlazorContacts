@@ -42,7 +42,8 @@ namespace BlazorContacts.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            //運行於 Linux 時啟用 Reverse Proxy 模式 
+            // 運行於 Linux 時啟用 Reverse Proxy 模式 
+            // 如果只有內部呼叫，沒有對外部開放，可以不需要
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 app.UseForwardedHeaders(new ForwardedHeadersOptions

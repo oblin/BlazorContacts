@@ -8,7 +8,7 @@ dotnet publish -r linux-x64 --self-contained true
 :: pushd .\bin\release\netcoreapp3.1\linux-x64\publish\
 
 :: debug
-pushd .\bin\Debug\netcoreapp3.1\linux-x64\publish\
+pushd .\bin\Debug\net6.0\linux-x64\publish\
 
-pscp -pw 490910 -r .\* centos@192.168.1.71:/home/centos/sandbox/BlazorContact/Api
+pscp -pw Ub@490910 -r .\* ubuntu@192.168.29.90:/home/ubuntu/sandbox/BlazorContact/Api
 popd
